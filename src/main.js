@@ -6,7 +6,7 @@ import "izitoast/dist/css/iziToast.min.css";
 const form = document.querySelector(".form");
 form.addEventListener("submit", (event) => {
     event.preventDefault();
-    const value = event.target.children[0].children[0].value;
+    const value = event.target.elements["search-text"].value;
     if (!value.trim().length) {
         iziToast.error({ 
             message: "The field can't be empty!",
@@ -17,7 +17,17 @@ form.addEventListener("submit", (event) => {
     clearGallery();
     showLoader();
     getImagesByQuery(value).then((data) => {
+        if (!data.hits.length) {
+            return
+        }
         createGallery(data.hits)
+    }).catch((e) => {
+        console.log(e);
+        
+        iziToast.error({ 
+            message: "API error.",
+            position: 'topRight'
+        })
     }).finally(() => {
         hideLoader();
         event.target.reset();
