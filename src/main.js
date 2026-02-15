@@ -14,9 +14,14 @@ form.addEventListener("submit", (event) => {
     if (!value.trim().length) {
         return alert("Поле порожнє!!!");
     }
- 
-      getImagesByQuery(value).then((data) => {
-          createGallery(data.hits)
-    })
-
+    clearGallery();
+    showLoader();
+    getImagesByQuery(value).then((data) => {
+        createGallery(data.hits)
+    }).catch((error) =>{
+        console.log(error);
+    }).finally(() => {
+        hideLoader();
+        event.target.reset();
+    }); 
 })

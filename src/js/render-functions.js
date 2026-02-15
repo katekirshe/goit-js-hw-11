@@ -1,13 +1,14 @@
+import SimpleLightbox from "simplelightbox";
+import "simplelightbox/dist/simple-lightbox.min.css";
+
+const gallery = document.querySelector(".gallery");
+const loader = document.querySelector(".loader");
+
 export function createGallery(images) {
-    const gallery = document.querySelector(".gallery");
-
-    console.log(images);
-    
-
-const galleryMarkup = images
+    const galleryMarkup = images
     .map(({ webformatURL, largeImageURL, tags, likes, views, comments, downloads }) => {
         return (`<li class="gallery-item">
-            <a class="gallery-link" href="${webformatURL}">
+            <a class="gallery-link" href="${largeImageURL}">
                 <img
                     class="gallery-image"
                     src="${webformatURL}"
@@ -34,19 +35,29 @@ const galleryMarkup = images
     .join("");
 
 
-gallery.insertAdjacentHTML('beforeend', galleryMarkup);
+    gallery.insertAdjacentHTML('beforeend', galleryMarkup);
+
+
+
+    const modalWindow = new SimpleLightbox('.gallery a', {
+        captionsData: 'alt',
+        captionDelay: 250,
+    });
+    modalWindow.refresh();
 };
 
+
+
 export function clearGallery() {
-    console.log(3);
+    gallery.innerHTML = "";
 };
 
 export function showLoader() {
-    console.log(4);
+   loader.classList.remove("hidden");
 };
 
 export function hideLoader() {
-    console.log(5);
+    loader.classList.add("hidden");
 };
 
 // webformatURL — посилання на маленьке зображення для списку карток у галереї

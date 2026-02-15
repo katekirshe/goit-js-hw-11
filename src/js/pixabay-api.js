@@ -25,8 +25,4 @@ return axios.get(BASE_URL, { params: {
   .catch(function (error) {
     console.log(error);
   })
-  .finally(function () {
-    // always executed
-  });
-
 }
