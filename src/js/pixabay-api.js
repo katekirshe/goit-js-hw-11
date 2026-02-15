@@ -19,10 +19,15 @@ return axios.get(BASE_URL, { params: {
               message: 'Sorry, there are no images matching your search query. Please try again!',
               position: 'topRight'
           });
+        return
       }; 
       return response.data;
   })
   .catch(function (error) {
     console.log(error);
+    iziToast.error({ 
+            message: "API error.",
+            position: 'topRight'
+        })
   })
 }
